@@ -3,6 +3,7 @@ package com.example.virtwallet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +16,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.PopupMenu;
 
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    private VirtWallet wallet = new VirtWallet("test");
+    private VirtWallet wallet;
 
     private ListView cashList;
     private ListView coinsList;
@@ -33,6 +51,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         total = (TextView) findViewById(R.id.total);
         cashList = (ListView) findViewById(R.id.listview);
         coinsList = (ListView) findViewById(R.id.listview2);
+
+        try {
+            checkForJson();
+            total.setText("Total: $" + wallet.getStringTotal());
+        } catch (FileNotFoundException e) {
+            wallet = new VirtWallet("test");
+        }
+
         cashList.setAdapter(new myListAdapter(R.layout.list_item, wallet.getCash()));
         coinsList.setAdapter(new myListAdapter(R.layout.list_item, wallet.getCoins()));
 
@@ -46,6 +72,49 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 popup.show();
             }
         });
+
+        Button saveBtn = (Button) findViewById(R.id.saveButton);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save(wallet.getCash(), wallet.getCoins());
+            }
+        });
+    }
+
+    public void checkForJson() throws FileNotFoundException {
+        String path = getApplicationContext().getFilesDir().getAbsolutePath();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(path+"/wallet.json"));
+        Gson gson = new Gson();
+        Object json = gson.fromJson(bufferedReader, Object.class);
+        String jsonString = json.toString();
+        gson = new Gson();
+        Type walletMapType = new TypeToken<HashMap<String,HashMap<Double,Integer>>>() {}.getType();
+        HashMap<String,HashMap<Double,Integer>> walletHash = gson.fromJson(jsonString, walletMapType);
+
+        HashMap<Double,Integer> cash = walletHash.get("cash");
+        HashMap<Double,Integer> coins = walletHash.get("coins");
+
+        wallet = new VirtWallet("test", cash, coins);
+    }
+
+    public void save(HashMap<Double,Integer> cash, HashMap<Double,Integer> coins) {
+        try {
+            HashMap<String,HashMap<Double,Integer>> hm= new HashMap<>();
+            hm.put("cash", cash);
+            hm.put("coins", coins);
+            Gson gson = new Gson();
+            String json = gson.toJson(hm);
+            Writer output = null;
+            File file = new File(getApplicationContext().getFilesDir(), "wallet.json");
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(json);
+            output.close();
+            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -66,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         } else {
             coinsList.setAdapter(new myListAdapter(R.layout.list_item, wallet.getCoins()));
         }
-        total.setText("Total:    $" + wallet.getStringTotal());
+        total.setText("Total: $" + wallet.getStringTotal());
     }
 
     /**

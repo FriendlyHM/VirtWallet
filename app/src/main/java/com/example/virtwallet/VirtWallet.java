@@ -3,6 +3,7 @@ package com.example.virtwallet;
 import java.util.HashMap;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class VirtWallet {
     private String name;
@@ -12,11 +13,24 @@ public class VirtWallet {
     public static final String CASH = "cash";
     public static final String COIN = "coin";
 
+    /**
+     * construct a brand new wallet
+     */
     public VirtWallet(String name) {
         this.name = name;
         this.totalMoney = new BigDecimal("0.00");
         this.cash = new HashMap<Double, Integer>();
         this.coins = new HashMap<Double, Integer>();
+    }
+
+    /**
+     * construct from a saved wallet
+     */
+    public VirtWallet(String name, HashMap<Double, Integer> cash, HashMap<Double, Integer> coins) {
+        this.name = name;
+        this.cash = cash;
+        this.coins = coins;
+        this.totalMoney = calcTotal(cash,coins);
     }
 
     /**

@@ -1,2 +1,2 @@
-rootProject.name='CalcWallet'
+rootProject.name='VirtWallet'
 include ':app'
