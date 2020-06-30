@@ -3,7 +3,6 @@ package com.example.virtwallet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,21 +19,16 @@ import android.widget.PopupMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private VirtWallet wallet;
@@ -82,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
     }
 
+    /**
+     * Checks if there exists a json file and creates a wallet
+     * @throws FileNotFoundException
+     */
     public void checkForJson() throws FileNotFoundException {
         String path = getApplicationContext().getFilesDir().getAbsolutePath();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(path+"/wallet.json"));
@@ -98,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         wallet = new VirtWallet("test", cash, coins);
     }
 
+    /**
+     * Saves the current wallet most important information to a json file
+     * @param cash - contains type of cash (Double) and how many of that type (Integer)
+     * @param coins - contains type of coins (Double) and how many of that type (Integer)
+     */
     public void save(HashMap<Double,Integer> cash, HashMap<Double,Integer> coins) {
         try {
             HashMap<String,HashMap<Double,Integer>> hm= new HashMap<>();
