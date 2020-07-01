@@ -16,8 +16,8 @@
         android:title="$5" />
     <item android:id="@+id/ten_dollar"
         android:title="$10" />
-    <item android:id="@+id/twenty_five_dollar"
-        android:title="$25" />
+    <item android:id="@+id/twenty_dollar"
+        android:title="$20" />
     <item android:id="@+id/fifty_dollar"
         android:title="$50" />
     <item android:id="@+id/one_hundred_dollar"

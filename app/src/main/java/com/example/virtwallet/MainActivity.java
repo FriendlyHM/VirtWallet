@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             output = new BufferedWriter(new FileWriter(file));
             output.write(json);
             output.close();
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case R.id.penny:
                 add(0.01);
@@ -188,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.ten_dollar:
                 add(10.00);
                 return true;
-            case R.id.twenty_five_dollar:
-                add(25.00);
+            case R.id.twenty_dollar:
+                add(20.00);
                 return true;
             case R.id.fifty_dollar:
                 add(50.00);
@@ -209,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         private TextView textView2;
         private Button minusBtn;
         private Button plusBtn;
+        private ImageView thumbnail;
 
         public myListAdapter(int resource, Map<Double, Integer> map) {
             mData = new ArrayList();
@@ -246,6 +246,46 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             textView1.setText(""+item.getKey());
             textView2 = ((TextView) result.findViewById(R.id.count_item_text));
             textView2.setText(""+item.getValue());
+            thumbnail = (ImageView) result.findViewById(R.id.list_item_thumbnail);
+
+            //set thumbnail
+            switch (getItem(position).getKey().toString()) {
+                case "1.0":
+                    thumbnail.setImageResource(R.drawable.one);
+                    break;
+                case "2.0":
+                    thumbnail.setImageResource(R.drawable.two);
+                    break;
+                case "5.0":
+                    thumbnail.setImageResource(R.drawable.five);
+                    break;
+                case "10.0":
+                    thumbnail.setImageResource(R.drawable.ten);
+                    break;
+                case "20.0":
+                    thumbnail.setImageResource(R.drawable.twenty);
+                    break;
+                case "50.0":
+                    thumbnail.setImageResource(R.drawable.fifty);
+                    break;
+                case "100.0":
+                    thumbnail.setImageResource(R.drawable.hundred);
+                    break;
+                case "0.01":
+                    thumbnail.setImageResource(R.drawable.penny);
+                    break;
+                case "0.05":
+                    thumbnail.setImageResource(R.drawable.nickel);
+                    break;
+                case "0.1":
+                    thumbnail.setImageResource(R.drawable.dime);
+                    break;
+                case "0.25":
+                    thumbnail.setImageResource(R.drawable.quarter);
+                    break;
+
+
+            }
 
             //button click for minus
             minusBtn = result.findViewById(R.id.list_item_minusbtn);
@@ -253,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 @Override
                 public void onClick(View v) {
                     minus(getItem(position).getKey());
-                    Toast.makeText(getApplicationContext(), "Removed $" + getItem(position).getKey(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Removed $" + getItem(position).getKey(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -263,11 +303,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 @Override
                 public void onClick(View v) {
                     add(getItem(position).getKey());
-                    Toast.makeText(getApplicationContext(), "Added $" + getItem(position).getKey(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Added $" + getItem(position).getKey(), Toast.LENGTH_SHORT).show();
                 }
             });
 
             return result;
         }
+
     }
 }

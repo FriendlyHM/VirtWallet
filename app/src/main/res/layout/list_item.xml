@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/list_item_thumbnail"
-        android:layout_width="48dp"
-        android:layout_height="46dp"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on" />
@@ -18,13 +18,14 @@
         android:id="@+id/list_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/list_item_minusbtn"
-        app:layout_constraintHorizontal_bias="0.032"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_thumbnail"
+        app:layout_constraintEnd_toStartOf="@+id/count_item_text"
         app:layout_constraintStart_toEndOf="@+id/list_item_thumbnail"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.509" />
 
     <Button
         android:id="@+id/list_item_minusbtn"
@@ -33,6 +34,7 @@
         android:text="-"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_thumbnail"
         app:layout_constraintEnd_toStartOf="@+id/list_item_plusbtn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,10 +42,10 @@
         android:id="@+id/list_item_plusbtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
         android:text="+"
         android:textSize="18dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_thumbnail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,10 +53,11 @@
         android:id="@+id/count_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_thumbnail"
         app:layout_constraintEnd_toStartOf="@+id/list_item_minusbtn"
-        app:layout_constraintHorizontal_bias="0.798"
-        app:layout_constraintStart_toEndOf="@+id/list_item_thumbnail"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.509" />
 </androidx.constraintlayout.widget.ConstraintLayout>
