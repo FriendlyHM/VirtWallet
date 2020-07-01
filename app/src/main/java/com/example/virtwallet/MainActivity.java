@@ -16,10 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.PopupMenu;
 
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
