@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private VirtWallet wallet;
@@ -101,9 +102,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
      * @param cash - contains type of cash (Double) and how many of that type (Integer)
      * @param coins - contains type of coins (Double) and how many of that type (Integer)
      */
-    public void save(HashMap<Double,Integer> cash, HashMap<Double,Integer> coins) {
+    public void save(Map<Double,Integer> cash, Map<Double,Integer> coins) {
         try {
-            HashMap<String,HashMap<Double,Integer>> hm= new HashMap<>();
+            Map<String,Map<Double,Integer>> hm= new HashMap<>();
             hm.put("cash", cash);
             hm.put("coins", coins);
             Gson gson = new Gson();
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         private Button minusBtn;
         private Button plusBtn;
 
-        public myListAdapter(int resource, HashMap<Double, Integer> map) {
+        public myListAdapter(int resource, Map<Double, Integer> map) {
             mData = new ArrayList();
             mData.addAll(map.entrySet());
             layout = resource;

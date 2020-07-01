@@ -8,8 +8,8 @@ import java.util.Map;
 public class VirtWallet {
     private String name;
     private BigDecimal totalMoney;
-    private HashMap<Double, Integer> cash;
-    private HashMap<Double, Integer> coins;
+    private Map<Double, Integer> cash;
+    private Map<Double, Integer> coins;
     public static final String CASH = "cash";
     public static final String COIN = "coin";
 
@@ -26,7 +26,7 @@ public class VirtWallet {
     /**
      * construct from a saved wallet
      */
-    public VirtWallet(String name, HashMap<Double, Integer> cash, HashMap<Double, Integer> coins) {
+    public VirtWallet(String name, Map<Double, Integer> cash, Map<Double, Integer> coins) {
         this.name = name;
         this.cash = cash;
         this.coins = coins;
@@ -93,7 +93,7 @@ public class VirtWallet {
      * @param coins - hashmap for coins
      * @return BigDecimal total amount of money
      */
-    public BigDecimal calcTotal(HashMap<Double, Integer> cash, HashMap<Double, Integer> coins) {
+    public BigDecimal calcTotal(Map<Double, Integer> cash, Map<Double, Integer> coins) {
         BigDecimal total = new BigDecimal(0);
         if(cash != null || cash.size() > 0 ) {
             BigDecimal amount;
@@ -120,10 +120,10 @@ public class VirtWallet {
         return String.format("%.2f",totalMoney);
     }
 
-    public HashMap<Double,Integer> getCash() {
+    public Map<Double,Integer> getCash() {
         return cash;
     }
-    public HashMap<Double,Integer> getCoins() {
+    public Map<Double,Integer> getCoins() {
         return coins;
     }
     public String toString() {
