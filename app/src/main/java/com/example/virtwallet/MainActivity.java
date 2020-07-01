@@ -66,14 +66,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 popup.show();
             }
         });
+    }
 
-        Button saveBtn = (Button) findViewById(R.id.saveButton);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save(wallet.getCash(), wallet.getCoins());
-            }
-        });
+    @Override
+    protected void onStop() {
+        save(wallet.getCash(), wallet.getCoins());
+        super.onStop();
+    }
+    @Override
+    public void onBackPressed() {
+        save(wallet.getCash(), wallet.getCoins());
+        super.onBackPressed();
     }
 
     /**
